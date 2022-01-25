@@ -18,7 +18,7 @@ Compile the files:
 ```bash
 javac Game.java Board.java
 ```
-Run the Game class to lauch
+Run the Game class to launch:
 ```bash
 java Game
 ```
