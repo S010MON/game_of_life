@@ -1,66 +1,75 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.util.Arrays;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
-public class Board extends JPanel 
+public class Board extends JPanel
 {
-	public boolean[][] u;
+	public boolean[][] current;
 	private int cellSize;
-    
-	//-------------------------------------------------------
-	
+    private int width;
+    private int height;
+
 	public Board(int width, int height, int cellSize)
 	{
 		this.cellSize = cellSize;
+        this.current = initBoard();
+        this.width = width;
+        this.height = height;
+
 		setPreferredSize(new Dimension(width, height));
 		setBorder(BorderFactory.createLineBorder(Color.black));
         setBackground(Color.BLACK);
-        initBoard();
     }
 
-	//-------------------------------------------------------
-    /**
-     * Paints all the pixels in the universe {@code u}
-     */
     public void paint(Graphics g) 
     {
-        super.paint(g); 
-        for(int x = 0; x < u.length; x++)
+        super.paint(g);
+        paintAllCells(g);
+    }
+
+    private void paintAllCells(Graphics g)
+    {
+        for(int x = 0; x < current.length; x++)
         {
-        	for(int y = 0; y < u[0].length; y++)
+            for (int y = 0; y < current[0].length; y++)
             {
-        		if(u[x][y])
-        		{
-        			g.setColor(Color.white);
-        			g.fillRect(x * cellSize, y * cellSize,cellSize,cellSize);
-        		}
+                drawCell(g, x, y);
             }
         }
     }
-    
-  //-------------------------------------------------------
-    
-    public void setBoard(boolean[][] board)
+
+    private void drawCell(Graphics g, int x, int y)
     {
-    	u = board;
+        if(current[x][y])
+        {
+            g.setColor(Color.white);
+        }
+        else
+        {
+            g.setColor(Color.black);
+        }
+        g.fillRect(x * cellSize, y * cellSize,cellSize,cellSize);
+    }
+
+    public void update(boolean[][] board)
+    {
+        current = board;
     	repaint();    	
     }
-       
-    //-------------------------------------------------------
 
-    private void initBoard()
+    private boolean[][] initBoard()
     {
-    	u = new boolean[WIDTH/cellSize][HEIGHT/cellSize];
-    	for(int x = 0; x < u.length; x++)
+    	boolean[][] board = new boolean[width/cellSize][height/cellSize];
+    	for(int x = 0; x < board.length; x++)
         {
-        	for(int y = 0; y < u[0].length; y++)
+        	for(int y = 0; y < board[0].length; y++)
             {
-       			u[x][y] = false;
+       			board[x][y] = false;
             }
         }
+        return board;
     }
 }

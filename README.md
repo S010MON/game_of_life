@@ -16,7 +16,7 @@ cd game_of_life
 ```
 Compile the files:
 ```bash
-javac Game.java Board.java
+javac Game.java View.java
 ```
 Run the Game class to launch:
 ```bash
